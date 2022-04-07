@@ -14,10 +14,31 @@ def approx(A,k):
     U, S, VT = np.linalg.svd(A ,full_matrices=False)
     S = np.diag(S)    
     approx = U[:,:k] @ S[:k,:k] @ VT[:k,:]
-    return approx
+    return approx.astype(int)
 
 
 
+
+
+def makeAnApprox(imgPath, krange):
+    fig = plt.figure()
+    img, R, G, B, h, w = openImage(imgPath)
+    j = 0
+    for i in krange:
+        j+=1
+        approxR = approx(R, i)
+        approxG = approx(G, i)
+        approxB = approx(B, i)
+        approxRGB = np.zeros((img.shape), dtype=int)
+        approxRGB[:,:,0] = np.copy(approxR)
+        approxRGB[:,:,1] = np.copy(approxG)
+        approxRGB[:,:,2] = np.copy(approxB)
+        fig.add_subplot(2, 2, j)
+        plt.imshow(approxRGB)
+        plt.axis("off")
+        plt.title("k =" + str(i))
+
+    return (img, approxRGB)
     # j = 0
     # for r in k:
     
@@ -29,17 +50,12 @@ def approx(A,k):
     #     plt.show()
 
 
-
-img, R, G, B, h, w = openImage('demo_2.jpg')
-approxR = approx(R, 50)
-approxG = approx(G, 50)
-approxB = approx(B, 50)
-approxRGB = np.zeros((img.shape))
-approxRGB[:,:,0] = np.copy(approxR)
-approxRGB[:,:,1] = np.copy(approxG)
-approxRGB[:,:,2] = np.copy(approxB)
-plt.imshow(approxRGB)
+k = (1, 2, 3)
+print(len(k))
+img, approxRGB = makeAnApprox('chat.jpg', (5, 20, 50))
+# plt.imshow(approxRGB[:,:,:])
 plt.show()
+
 
 # approxRGB[:,:,0] = approxR
 # approxRGB[:,:,1] = approxG

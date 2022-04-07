@@ -63,6 +63,17 @@ def getAvgPsnr(i, img, R, G, B, width, heigth):
     avgPsnr = np.average((psnrR, psnrG, psnrB))
     return avgPsnr
 
+print('donnez un tuple de valeur k :ex (5, 20, 100)')
+k = eval(input())
+while not(type(k) is tuple):
+    print('erreur : donnez un tuple , ex: (1,2,3)')
+    k = eval(input())
+
+# img, approxRGB, width, heigth = makeAnApprox('chat.jpg', (0,15,100))
+# print('width =', width)
+# print('heigth =', heigth)
+# plt.show()
+
 
 # def makeAnApprox(imgPath, krange):
 #     fig = plt.figure()
@@ -115,12 +126,3 @@ def getAvgPsnr(i, img, R, G, B, width, heigth):
     #     plt.axis('off')
     #     plt.title('r=' + str(r))
     #     plt.show()
-
-
-
-img, approxRGB, width, heigth = makeAnApprox('chat.jpg', (0,15,100))
-print('width =', width)
-print('heigth =', heigth)
-plt.show()
-
-

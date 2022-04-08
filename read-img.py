@@ -1,3 +1,4 @@
+from select import select
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -52,6 +53,8 @@ def makeAnApprox(imgPath, krange):
     plt.title("originale")
     fig.add_subplot(1, long, j+2)
     plt.plot(x, y)
+    plt.xlabel('Valeur de k')
+    plt.ylabel('PSNR moyenn')
     plt.title('courbe moyenne psnr')
     return (img, approxRGB, w, h)
 
@@ -63,16 +66,45 @@ def getAvgPsnr(i, img, R, G, B, width, heigth):
     avgPsnr = np.average((psnrR, psnrG, psnrB))
     return avgPsnr
 
-print('donnez un tuple de valeur k :ex (5, 20, 100)')
-k = eval(input())
-while not(type(k) is tuple):
-    print('erreur : donnez un tuple , ex: (1,2,3)')
+def menu():
+    print('donnez un tuple de valeur k :ex (5, 20, 100)')
     k = eval(input())
+    while not(type(k) is tuple):
+        print('erreur : donnez un tuple , ex: (1,2,3)')
+        k = eval(input())
+    print('select a picture : ')
+    print('1.cat')
+    print('2.colors')
+    print('3.hamster')
+    print('4.parrots')
+    print('5.import my image')
+    select = eval(input())
+    while not(select in (1,2,3,4)):
+        print('please select a correct picture')
+        print('select a picture : ')
+        print('1.cat')
+        print('2.colors')
+        print('3.hamster')
+        print('4.parrots')
+        select = eval(input())
+    if(select == 1):
+        return k,'chat.jpg'
+    elif(select == 2):
+        return k,'couleurs.jpg'
+    elif(select == 3):
+        return k,'demo_2.jpg'
+    elif(select == 4):
+        return k,'inseparables.jpg'
+    elif(select == 5):
+        print('enter image path')
+        imgPath = input()
+        return k, imgPath
 
-# img, approxRGB, width, heigth = makeAnApprox('chat.jpg', (0,15,100))
-# print('width =', width)
-# print('heigth =', heigth)
-# plt.show()
+k,imgPath = menu()
+img, approxRGB, width, heigth = makeAnApprox(imgPath, k)
+print('width =', width)
+print('heigth =', heigth)
+plt.show()
 
 
 # def makeAnApprox(imgPath, krange):
@@ -104,25 +136,3 @@ while not(type(k) is tuple):
 
 
 
-# def drawPsnr(krange):
-#     x = np.array([0])
-#     y = np.array([0])
-# def PSNR(original, compressed):
-#     mse = np.mean((original - compressed) ** 2)
-#     if(mse == 0):  # MSE is zero means no noise is present in the signal .
-#                   # Therefore PSNR have no importance.
-#         return 100
-#     max_pixel = 255.0
-#     psnr = 20 * np.log10(max_pixel / np.sqrt(mse))
-#     return psnr
-
-    # def psnr(img, approx):
-    # j = 0
-    # for r in k:
-    
-    #     # plt.figure(j+1)
-    #     # j += 1
-    #     plt.imshow(approx)
-    #     plt.axis('off')
-    #     plt.title('r=' + str(r))
-    #     plt.show()
